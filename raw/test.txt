@@ -1,0 +1,34 @@
+<div class="row">
+					<div class="col-sm-12">
+						<?php include_once('success_message.php');?>
+					</div>
+				</div>
+				<!-- ROW -->
+
+				<?php if($_SESSION['user_type'] == "admin"){ ?>
+				<div class="row" >
+					<div class="col-sm-8"></div>
+					<div class="col-sm-4 overflow-auto" style="height:400px;">
+						<h4 class="text-white bg-primary p-2 rounded">Leaked Messages</h4>
+						<?php 
+						$sql="SELECT * FROM leaked_messages ORDER BY id DESC";
+						$result=mysqli_query($conn, $sql);
+						?>
+						<div class="list-group">
+						<?php while($rows=mysqli_fetch_array($result)){?>
+						<div class="list-group-item">
+							<?=getfiledetail($rows['file_id'])?> 
+								<span class='text-primary'>
+									 <small>
+									 	<?=ucfirst(getusername($rows['user_id']))?>, tries to download file
+									 </small>
+								</span>									
+				<a 
+					href="delete_leaked_message.php?id=<?=$rows['id']?>" 
+					class="btn btn-danger btn-sm mb-2">Delete</a>						
+						</div>
+					    <?php } ?>
+					    </div>
+					</div>
+				</div>
+				<?php } ?>
